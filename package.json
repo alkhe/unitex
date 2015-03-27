@@ -1,0 +1,27 @@
+{
+  "name": "unitex",
+  "version": "0.1.0",
+  "description": "A simple, robust, and extensive unit formatter.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edge/unitex"
+  },
+  "keywords": [
+    "unit",
+    "format",
+    "si",
+    "iec",
+    "prefix",
+    "number"
+  ],
+  "author": "synchronous",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edge/unitex/issues"
+  },
+  "homepage": "https://github.com/edge/unitex"
+}
