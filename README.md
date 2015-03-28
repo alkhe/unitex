@@ -34,7 +34,8 @@ unit.format(5555, { precision: 1 }); // '5.5k'
 ### unit.formatter(options)
 Uses the same options as unit.format, but caches the options for better performance.
 ```js
-var fmt = unit.formatter({})
+var fmt = unit.formatter({ unit: 'B', base: 1024, atomic: true });
+fmt(1024); // '1 KB'
 ```
 
 # Todo
