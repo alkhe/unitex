@@ -7,8 +7,10 @@ var format = function(n, o) {
 		base = o.base || 1000,
 		precision = o.precision || 3,
 		unit = o.unit || '',
+		unitnotgiven = o.unit == undefined,
 		forced = !!o.precision,
 		atomic = o.atomic,
+		round = o.round,
 		lowerbound = atomic ? 0 : -8,
 		table = atomic ? atomicprefix : prefix,
 		trailing = o.trailing;
@@ -37,9 +39,9 @@ var format = function(n, o) {
 		ppfix += 8;
 	}
 
-	var num = !forced && !trailing && atomic && ppfix == 0 ? n : n.toFixed(precision);
+	var num = round && atomic && ppfix == 0 ? n | 0 : n.toFixed(precision);
 
-	return sign + (trailing ? num : parseFloat(num)) + (unit.length > 0 ? ' ' + table[ppfix] + unit : table[ppfix]);
+	return sign + (trailing ? num : parseFloat(num)) + (!unitnotgiven ? ' ' + table[ppfix] + unit : table[ppfix]);
 };
 
 var formatter = function(o) {
@@ -48,8 +50,10 @@ var formatter = function(o) {
 		base = o.base || 1000,
 		precision = o.precision || 3,
 		unit = o.unit || '',
+		unitnotgiven = o.unit == undefined,
 		forced = !!o.precision,
 		atomic = o.atomic,
+		round = o.round,
 		lowerbound = atomic ? 0 : -8,
 		table = atomic ? atomicprefix : prefix,
 		trailing = o.trailing;
@@ -79,9 +83,9 @@ var formatter = function(o) {
 			ppfix += 8;
 		}
 
-		var num = !forced && !trailing && atomic && ppfix == 0 ? n : n.toFixed(precision);
+		var num = round && atomic && ppfix == 0 ? n | 0 : n.toFixed(precision);
 
-		return sign + (trailing ? num : parseFloat(num)) + (unit.length > 0 ? ' ' + table[ppfix] + unit : table[ppfix]);
+		return sign + (trailing ? num : parseFloat(num)) + (!unitnotgiven ? ' ' + table[ppfix] + unit : table[ppfix]);
 	}
 }
 

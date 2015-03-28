@@ -1,6 +1,6 @@
 var unit = require('.');
 
-var datafmt = unit.formatter({ atomic: true, trailing: true, unit: 'iB', base: 1024 });
+var datafmt = unit.formatter({ atomic: true, trailing: true, unit: 'iB', base: 1024, round: true });
 var timefmt = unit.formatter({ unit: 's', prefix: -1 });
 
 var tests = [
@@ -16,8 +16,10 @@ var tests = [
 	['too big', unit.format(1e25, { trailing: true }), '10.000Y'],
 	['too small', unit.format(1e-25, { unit: 'N' }), '0.1 yN'],
 	['negative', unit.format(-123213), '-123.213k'],
+	['noround', unit.format(10.1, { atomic: true, round: false }), '10.1'],
+	['round', unit.format(10.1, { atomic: true, round: true }), '10'],
 	['df-basic', datafmt(1024), '1.000 KiB'],
-	['-df-basic', datafmt(-10), '-10.000 iB'],
+	['-df-basic', datafmt(-10), '-10 iB'],
 	['tf-basic', timefmt(1000), '1 s'],
 	['tf-basic', timefmt(123), '123 ms'],
 	['exportsi', unit.siprefix.length, 17],

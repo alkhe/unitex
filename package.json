@@ -1,6 +1,6 @@
 {
   "name": "unitex",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple, robust, and extensive unit formatter.",
   "main": "index.js",
   "scripts": {
