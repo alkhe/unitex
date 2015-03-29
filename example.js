@@ -18,6 +18,7 @@ var tests = [
 	['negative', unit.format(-123213), '-123.213k'],
 	['noround', unit.format(10.1, { atomic: true, round: false }), '10.1'],
 	['round', unit.format(10.1, { atomic: true, round: true }), '10'],
+	['delimiter', unit.format(10.1, { delimiter: ',' }), '10,1'],
 	['df-basic', datafmt(1024), '1.000 KiB'],
 	['-df-basic', datafmt(-10), '-10 iB'],
 	['tf-basic', timefmt(1000), '1 s'],

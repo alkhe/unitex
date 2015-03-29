@@ -1,5 +1,6 @@
-var prefix = ['y', 'z', 'a', 'f', 'p', 'n', 'u', 'm', '', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
-var atomicprefix = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+const prefix = ['y', 'z', 'a', 'f', 'p', 'n', 'u', 'm', '', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'],
+	atomicprefix = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'],
+	localeDelimiter = .5.toLocaleString().substring(1, 2);
 
 var format = function(n, o) {
 	o = o || {};
@@ -13,7 +14,8 @@ var format = function(n, o) {
 		round = o.round,
 		lowerbound = atomic ? 0 : -8,
 		table = atomic ? atomicprefix : prefix,
-		trailing = o.trailing;
+		trailing = o.trailing,
+		delimiter = o.delimiter;
 
 	var ppfix = bppfix,
 		sign = n < 0 ? '-' : '';
@@ -39,9 +41,14 @@ var format = function(n, o) {
 		ppfix += 8;
 	}
 
-	var num = round && atomic && ppfix == 0 ? n | 0 : n.toFixed(precision);
+	var num = round && atomic && ppfix == 0 ? n | 0 : n.toFixed(precision),
+		str = (trailing ? num : parseFloat(num)) + '';
 
-	return sign + (trailing ? num : parseFloat(num)) + (!unitnotgiven ? ' ' + table[ppfix] + unit : table[ppfix]);
+	if (delimiter) {
+		str = str.replace(localeDelimiter, delimiter);
+	}
+
+	return sign + str + (!unitnotgiven ? ' ' + table[ppfix] + unit : table[ppfix]);
 };
 
 var formatter = function(o) {
@@ -56,7 +63,8 @@ var formatter = function(o) {
 		round = o.round,
 		lowerbound = atomic ? 0 : -8,
 		table = atomic ? atomicprefix : prefix,
-		trailing = o.trailing;
+		trailing = o.trailing,
+		delimiter = o.delimiter;
 
 	return function(n) {
 		var ppfix = bppfix,
@@ -83,9 +91,14 @@ var formatter = function(o) {
 			ppfix += 8;
 		}
 
-		var num = round && atomic && ppfix == 0 ? n | 0 : n.toFixed(precision);
+		var num = round && atomic && ppfix == 0 ? n | 0 : n.toFixed(precision),
+			str = (trailing ? num : parseFloat(num)) + '';
 
-		return sign + (trailing ? num : parseFloat(num)) + (!unitnotgiven ? ' ' + table[ppfix] + unit : table[ppfix]);
+		if (delimiter) {
+			str = str.replace(localeDelimiter, delimiter);
+		}
+
+		return sign + str + (!unitnotgiven ? ' ' + table[ppfix] + unit : table[ppfix]);
 	}
 }
 
